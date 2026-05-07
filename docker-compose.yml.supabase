@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./smch-api
+      dockerfile: Dockerfile
+    container_name: smch-api
+    working_dir: /var/www/html
+    volumes:
+      - ./smch-api:/var/www/html
+    env_file:
+      - ./smch-api/.env.docker
+    ports:
+      - "8000:8000"
+    # Removed 'depends_on: - db' since we're using Supabase cloud
+    command: >
+      sh -c "composer install --no-interaction --prefer-dist || true && php artisan key:generate --force || true && php artisan migrate --force || true && php artisan serve --host=0.0.0.0 --port=8000"
+
+  web:
+    build:
+      context: ./smch-web
+      dockerfile: Dockerfile
+    container_name: smch-web
+    working_dir: /app
+    volumes:
+      - ./smch-web:/app
+    ports:
+      - "5173:5173"
+    command: >
+      sh -c "npm install --no-audit --silent || true && npm run dev -- --host 0.0.0.0 --port 5173"
+    depends_on:
+      - api
+
+  # Database service removed - Using Supabase PostgreSQL (cloud-hosted)
+  # db:
+  #   image: mysql:8.0
+  #   container_name: smch-mysql
+  #   ...
+  
+  # PhpMyAdmin removed - Use Supabase SQL Editor instead
+  # phpmyadmin:
+  #   ...
+
+volumes:
+  # db_data: (removed - no local database)
+  # volumes section can be removed entirely
