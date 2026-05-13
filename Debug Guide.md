@@ -233,7 +233,7 @@ javascriptconst handleSubmit = async (e) => {
     } else {
       throw new Error('Server returned success=false');
     }
-  } catch (error) {
+  } cat (error) {
     console.error('[ERROR]', error.message);
     console.error('Response:', error.response?.data);
     setError(error.message);
