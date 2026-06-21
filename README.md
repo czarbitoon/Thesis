@@ -117,4 +117,8 @@ VITE_API_BASE_URL=http://localhost:8000
 3.  Set the **Framework Preset** to `Vite`.
 4.  If you use environment variables, add them in **Project Settings > Environment Variables**.
 5.  The default build command is `npm run build` and the output directory is `dist`.
+<<<<<<< HEAD
 6.  Your site will be live on your Vercel domain after deployment.
+=======
+6.  Your site will be live on your Vercel domain after deployment.
+>>>>>>> b5cfd9e13a1ced9187611a60d3542d68111c5864
